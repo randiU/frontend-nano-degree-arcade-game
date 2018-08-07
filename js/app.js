@@ -25,11 +25,31 @@ Enemy.prototype.render = function() {
 // This class requires an update(), render() and
 // a handleInput() method.
 
+let Player = function(x,y, speed) {
+    this.x = x;
+    this.y = y;
+    this.speed = speed;
+    this.sprite = 'images/char-boy.png'
+};
+
+Player.prototype.update = function() {
+
+};
+
+Player.prototype.render = function() {
+    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+
+};
 
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
 // Place the player object in a variable called player
 
+var allEnemies = [];
+var player = new Player(202.5, 383, 50);
+var score = 0;
+var gameLevel = 1;
+var enemy = ""
 
 
 // This listens for key presses and sends the keys to your
