@@ -44,7 +44,7 @@ Player.prototype.render = function() {
 
 };
 
-let canvas = document.querySelector('canvas');
+
 //handles all of the inputs from the user
 Player.prototype.handleInput = function(keyPress) {
     if (keyPress == 'left') {
@@ -65,8 +65,10 @@ Player.prototype.handleInput = function(keyPress) {
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
 // Place the player object in a variable called player
+//enemy must start at 0 for the x, 
+let enemyOne = new Enemy(0, 235, Math.random() * 256)
 
-var allEnemies = [];
+var allEnemies = [enemyOne];
 var player = new Player(200, 383, 50);
 var score = 0;
 var gameLevel = 1;
