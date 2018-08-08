@@ -19,6 +19,10 @@ Enemy.prototype.update = function(dt) {
      this.x += this.speed * dt;
 
      //loops enemies
+     if (this.x >= 505) {
+        this.x = 0;
+        this.speed = Math.random() * 256;
+     }
 };
 
 // Draw the enemy on the screen, required method for game
