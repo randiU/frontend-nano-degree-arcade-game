@@ -31,11 +31,6 @@ Enemy.prototype.update = function(dt) {
      }
 };
 
-//creates random speeds based on level
-// Enemy.prototype.randomSpeed = function(){
-//     this.levelOne = function
-// }
-
 // Draw the enemy on the screen, required method for game
 Enemy.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
@@ -59,11 +54,18 @@ let Player = function(x,y, speed) {
 };
 
 Player.prototype.update = function() {
-    if (player.y === -20) {
+    // if (player.y === -20) {
+    //     console.log('next level');
+    //     this.x = 200;
+    //     this.y = 380;
+    // };
+};
+
+//adjusts players position back to the beginning
+Player.prototype.resetPos = function() {
         console.log('next level');
         this.x = 200;
         this.y = 380;
-    }
 };
 
 Player.prototype.render = function() {
@@ -74,6 +76,7 @@ Player.prototype.render = function() {
 
 //handles all of the inputs from the user
 Player.prototype.handleInput = function(keyPress) {
+    //&& this.x(or y) adds border functionality
     if (keyPress == 'left' && this.x > 0) {
         player.x -= player.speed;
         console.log(player.x, player.y);
@@ -90,8 +93,16 @@ Player.prototype.handleInput = function(keyPress) {
         player.y += player.speed - 20;
         console.log(player.x, player.y);
     }
+    //if player reaches the water, resets to the beginning position
+    if (player.y === -20) {
+        this.resetPos();
+    }
     console.log('keyPress -' + keyPress);
 };
+
+
+
+
 
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
@@ -99,11 +110,11 @@ Player.prototype.handleInput = function(keyPress) {
 //enemy must start at 0 for the x, 
 let enemyOne = new Enemy(0, 235, Math.random() * 256)
 
-var allEnemies = [enemyOne];
-var player = new Player(200, 380, 70);
-var score = 0;
-var gameLevel = 1;
-var enemy = ""
+let allEnemies = [enemyOne];
+let player = new Player(200, 380, 70);
+let score = 0;
+let gameLevel = 1;
+let enemy = ""
 
 
 // This listens for key presses and sends the keys to your
