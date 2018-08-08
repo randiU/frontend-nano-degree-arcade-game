@@ -1,3 +1,19 @@
 body {
     text-align: center;
 }
+
+#gameName {
+	font-family: 'Baloo', cursive;
+	font-size: 3em;
+}
+.infoContainer {
+	display: flex;
+	flex-wrap: wrap;
+}
+.playerInfo {
+	width: 50%;
+}
+
+.playerState {
+	width: 50%;
+}
