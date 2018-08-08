@@ -17,6 +17,8 @@ Enemy.prototype.update = function(dt) {
     // which will ensure the game runs at the same speed for
     // all computers.
      this.x += this.speed * dt;
+
+     //loops enemies
 };
 
 // Draw the enemy on the screen, required method for game
@@ -49,15 +51,19 @@ Player.prototype.render = function() {
 Player.prototype.handleInput = function(keyPress) {
     if (keyPress == 'left') {
         player.x -= player.speed;
+        console.log(player.x, player.y);
     }
     if (keyPress == 'up') {
         player.y -= player.speed - 20;
+        console.log(player.x, player.y);
     }
     if (keyPress == 'right') {
         player.x += player.speed;
+        console.log(player.x, player.y);
     }
     if (keyPress == 'down') {
         player.y += player.speed - 20;
+        console.log(player.x, player.y);
     }
     console.log('keyPress -' + keyPress);
 };
@@ -69,7 +75,7 @@ Player.prototype.handleInput = function(keyPress) {
 let enemyOne = new Enemy(0, 235, Math.random() * 256)
 
 var allEnemies = [enemyOne];
-var player = new Player(200, 383, 50);
+var player = new Player(200, 380, 70);
 var score = 0;
 var gameLevel = 1;
 var enemy = ""
