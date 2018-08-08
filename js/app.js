@@ -1,3 +1,9 @@
+/*
+*
+Enemy
+*
+*/
+
 // Enemies our player must avoid
 var Enemy = function(x,y,speed) {
     // Variables applied to each of our instances go here,
@@ -18,12 +24,17 @@ Enemy.prototype.update = function(dt) {
     // all computers.
      this.x += this.speed * dt;
 
-     //loops enemies
+     //loops enemies and randomizes speed
      if (this.x >= 505) {
         this.x = 0;
         this.speed = Math.random() * 256;
      }
 };
+
+//creates random speeds based on level
+// Enemy.prototype.randomSpeed = function(){
+//     this.levelOne = function
+// }
 
 // Draw the enemy on the screen, required method for game
 Enemy.prototype.render = function() {
@@ -34,6 +45,12 @@ Enemy.prototype.render = function() {
 // This class requires an update(), render() and
 // a handleInput() method.
 
+/*
+*
+Player
+*
+*/
+
 let Player = function(x,y, speed) {
     this.x = x;
     this.y = y;
@@ -42,7 +59,11 @@ let Player = function(x,y, speed) {
 };
 
 Player.prototype.update = function() {
-
+    if (player.y === -20) {
+        console.log('next level');
+        this.x = 200;
+        this.y = 380;
+    }
 };
 
 Player.prototype.render = function() {
@@ -53,19 +74,19 @@ Player.prototype.render = function() {
 
 //handles all of the inputs from the user
 Player.prototype.handleInput = function(keyPress) {
-    if (keyPress == 'left') {
+    if (keyPress == 'left' && this.x > 0) {
         player.x -= player.speed;
         console.log(player.x, player.y);
     }
-    if (keyPress == 'up') {
+    if (keyPress == 'up' && this.y > -20) {
         player.y -= player.speed - 20;
         console.log(player.x, player.y);
     }
-    if (keyPress == 'right') {
+    if (keyPress == 'right' && this.x < 410) {
         player.x += player.speed;
         console.log(player.x, player.y);
     }
-    if (keyPress == 'down') {
+    if (keyPress == 'down' && this.y < 380) {
         player.y += player.speed - 20;
         console.log(player.x, player.y);
     }
