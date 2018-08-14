@@ -51,14 +51,11 @@ let Player = function(x,y, speed) {
     this.y = y;
     this.speed = speed;
     this.sprite = 'images/char-boy.png'
+    this.boundary 
 };
 
 Player.prototype.update = function() {
-    // if (player.y === -20) {
-    //     console.log('next level');
-    //     this.x = 200;
-    //     this.y = 380;
-    // };
+  
 };
 
 //adjusts players position back to the beginning
@@ -74,29 +71,42 @@ Player.prototype.render = function() {
 };
 
 
+
 //handles all of the inputs from the user
 Player.prototype.handleInput = function(keyPress) {
     //&& this.x(or y) adds border functionality
     if (keyPress == 'left' && this.x > 0) {
         player.x -= player.speed;
         console.log(player.x, player.y);
+        console.log(enemyOne.x, enemyOne.y);
     }
     if (keyPress == 'up' && this.y > -20) {
         player.y -= player.speed - 20;
         console.log(player.x, player.y);
+        console.log(enemyOne.x, enemyOne.y);
     }
     if (keyPress == 'right' && this.x < 410) {
         player.x += player.speed;
         console.log(player.x, player.y);
+        console.log(enemyOne.x, enemyOne.y);
     }
     if (keyPress == 'down' && this.y < 380) {
         player.y += player.speed - 20;
         console.log(player.x, player.y);
+        console.log(enemyOne.x, enemyOne.y);
     }
     //if player reaches the water, resets to the beginning position
     if (player.y === -20) {
         this.resetPos();
     }
+
+    if (player.y - 70 <= enemyOne.y && player.x - 70 <= enemyOne.x
+     && player.y + 70 >= enemyOne.y && player.x + 70 >= enemyOne.x) {
+        console.log('colided');
+        this.resetPos();
+    }
+    
+
     console.log('keyPress -' + keyPress);
 };
 
