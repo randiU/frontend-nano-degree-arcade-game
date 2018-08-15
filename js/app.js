@@ -1,6 +1,6 @@
 /*
 *
-Enemy
+***********************Enemy**********************
 *
 */
 
@@ -42,7 +42,7 @@ Enemy.prototype.render = function() {
 
 /*
 *
-Player
+*********************Player**************************
 *
 */
 
@@ -51,10 +51,19 @@ let Player = function(x,y, speed) {
     this.y = y;
     this.speed = speed;
     this.sprite = 'images/char-boy.png'
-    this.boundary 
+    this.level = 1;
+    this.points = 0;
+    this.lives = 3;
 };
 
 Player.prototype.update = function() {
+     if (player.y - 70 <= enemyOne.y && player.x - 70 <= enemyOne.x
+     && player.y + 70 >= enemyOne.y && player.x + 70 >= enemyOne.x) {
+        console.log('colided');
+        this.resetPos();
+        this.lives -= 1;
+        console.log(this.lives);
+    }
   
 };
 
@@ -98,20 +107,33 @@ Player.prototype.handleInput = function(keyPress) {
     //if player reaches the water, resets to the beginning position
     if (player.y === -20) {
         this.resetPos();
+        this.level += 1;
+        console.log(this.level);
     }
 
-    if (player.y - 70 <= enemyOne.y && player.x - 70 <= enemyOne.x
-     && player.y + 70 >= enemyOne.y && player.x + 70 >= enemyOne.x) {
-        console.log('colided');
-        this.resetPos();
-    }
+    // if (player.y - 70 <= enemyOne.y && player.x - 70 <= enemyOne.x
+    //  && player.y + 70 >= enemyOne.y && player.x + 70 >= enemyOne.x) {
+    //     console.log('colided');
+    //     this.resetPos();
+    //     this.lives -= 1;
+    //     console.log(this.lives);
+    // }
     
 
     console.log('keyPress -' + keyPress);
 };
 
+/*
+**********************************************************
+*/
 
+let playerLevel = $('#currentLevel');
+// playerLevel.text("Level: " + player.level);
 
+console.log(playerLevel.text());
+/*
+*********************************************************
+*/
 
 
 // Now instantiate your objects.
@@ -125,8 +147,8 @@ let player = new Player(200, 380, 70);
 let score = 0;
 let gameLevel = 1;
 let enemy = ""
-
-
+console.log(player.level);
+playerLevel.text("Level: " + player.level);
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.
 document.addEventListener('keyup', function(e) {
