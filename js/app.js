@@ -45,24 +45,21 @@ Enemy.prototype.render = function() {
 *********************Player**************************
 *
 */
-
+//take out level,points,lives and make them into own object instead of constructor f
 let Player = function(x,y, speed) {
     this.x = x;
     this.y = y;
     this.speed = speed;
     this.sprite = 'images/char-boy.png'
-    this.level = 1;
-    this.points = 0;
-    this.lives = 3;
 };
+
+let playerLivesHtml = 3;
 
 Player.prototype.update = function() {
      if (player.y - 70 <= enemyOne.y && player.x - 70 <= enemyOne.x
      && player.y + 70 >= enemyOne.y && player.x + 70 >= enemyOne.x) {
-        console.log('colided');
+        console.log('collided');
         this.resetPos();
-        this.lives -= 1;
-        console.log(this.lives);
     }
   
 };
@@ -111,14 +108,6 @@ Player.prototype.handleInput = function(keyPress) {
         console.log(this.level);
     }
 
-    // if (player.y - 70 <= enemyOne.y && player.x - 70 <= enemyOne.x
-    //  && player.y + 70 >= enemyOne.y && player.x + 70 >= enemyOne.x) {
-    //     console.log('colided');
-    //     this.resetPos();
-    //     this.lives -= 1;
-    //     console.log(this.lives);
-    // }
-    
 
     console.log('keyPress -' + keyPress);
 };
@@ -127,10 +116,11 @@ Player.prototype.handleInput = function(keyPress) {
 **********************************************************
 */
 
-let playerLevel = $('#currentLevel');
-// playerLevel.text("Level: " + player.level);
+// let playerLevel = $('#currentLevel');
+// // playerLevel.text("Level: " + player.level);
+// let currentLives = $('#currentLives');
 
-console.log(playerLevel.text());
+// console.log("Lives " + currentLives.text());
 /*
 *********************************************************
 */
@@ -147,8 +137,11 @@ let player = new Player(200, 380, 70);
 let score = 0;
 let gameLevel = 1;
 let enemy = ""
-console.log(player.level);
-playerLevel.text("Level: " + player.level);
+
+
+// let currentLevel = player.level;
+// playerLevel.text("Level: " + currentLevel.bind(player));
+
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.
 document.addEventListener('keyup', function(e) {
