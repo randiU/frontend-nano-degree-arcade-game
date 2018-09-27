@@ -109,9 +109,8 @@ Player.prototype.handleInput = function(keyPress) {
     }
     //if player reaches the water, resets to the beginning position
     if (player.y === -20) {
-        this.resetPos();
-        this.level += 1;
-        console.log(this.level);
+        setTimeout(function() {
+            player.resetPos()}, 500);
     }
 
 
