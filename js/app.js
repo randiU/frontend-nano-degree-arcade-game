@@ -29,6 +29,7 @@ Enemy.prototype.update = function(dt) {
         this.x = 0;
         this.speed = Math.random() * 256;
      }
+     //checks for collision and starts player over if collision occurs.
      if (player.y - 70 <= this.y && player.x - 70 <= this.x
      && player.y + 70 >= this.y && player.x + 70 >= this.x) {
         console.log('collided');
@@ -139,10 +140,11 @@ const playerGameInfo = {
 // Place all enemy objects in an array called allEnemies
 // Place the player object in a variable called player
 //enemy must start at 0 for the x, 
-let enemyOne = new Enemy(0, 235, Math.random() * 256)
+let enemyOne = new Enemy(0, 235, Math.random() * 256);
 let enemyTwo = new Enemy(0, 140, Math.random() * 256);
+let enemyThree = new Enemy(0, 65, Math.random() * 256);
 
-let allEnemies = [enemyOne, enemyTwo];
+let allEnemies = [enemyOne, enemyTwo, enemyThree];
 let player = new Player(200, 380, 70);
 let score = 0;
 let gameLevel = 1;
