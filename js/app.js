@@ -29,6 +29,11 @@ Enemy.prototype.update = function(dt) {
         this.x = 0;
         this.speed = Math.random() * 256;
      }
+     if (player.y - 70 <= this.y && player.x - 70 <= this.x
+     && player.y + 70 >= this.y && player.x + 70 >= this.x) {
+        console.log('collided');
+        player.resetPos();
+    }
 };
 
 // Draw the enemy on the screen, required method for game
@@ -53,14 +58,14 @@ let Player = function(x,y, speed) {
     this.sprite = 'images/char-boy.png'
 };
 
-let playerLivesHtml = 3;
+
 
 Player.prototype.update = function() {
-     if (player.y - 70 <= enemyOne.y && player.x - 70 <= enemyOne.x
-     && player.y + 70 >= enemyOne.y && player.x + 70 >= enemyOne.x) {
-        console.log('collided');
-        this.resetPos();
-    }
+    //  if (player.y - 70 <= enemyOne.y && player.x - 70 <= enemyOne.x
+    //  && player.y + 70 >= enemyOne.y && player.x + 70 >= enemyOne.x) {
+    //     console.log('collided');
+    //     this.resetPos();
+    // }
   
 };
 
@@ -112,6 +117,10 @@ Player.prototype.handleInput = function(keyPress) {
     console.log('keyPress -' + keyPress);
 };
 
+const playerGameInfo = {
+
+}
+
 /*
 **********************************************************
 */
@@ -131,8 +140,9 @@ Player.prototype.handleInput = function(keyPress) {
 // Place the player object in a variable called player
 //enemy must start at 0 for the x, 
 let enemyOne = new Enemy(0, 235, Math.random() * 256)
+let enemyTwo = new Enemy(0, 140, Math.random() * 256);
 
-let allEnemies = [enemyOne];
+let allEnemies = [enemyOne, enemyTwo];
 let player = new Player(200, 380, 70);
 let score = 0;
 let gameLevel = 1;
