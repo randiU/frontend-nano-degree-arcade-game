@@ -10,7 +10,8 @@ var Enemy = function(x,y,speed) {
     // we've provided one for you to get started
     this.x = x;
     this.y = y;
-    this.speed = speed;
+    //randomized the speed of each enemy
+    this.speed = Math.random() * (speed - 40 + 1) + 40;
     // The image/sprite for our enemies, this uses
     // a helper we've provided to easily load images
     this.sprite = 'images/enemy-bug.png';
@@ -24,14 +25,13 @@ Enemy.prototype.update = function(dt) {
     // all computers.
      this.x += this.speed * dt;
 
-     //loops enemies and randomizes speed
+     //loops enemies
      if (this.x >= 505) {
         this.x = 0;
-        this.speed = Math.random() * 256;
      }
      //checks for collision and starts player over if collision occurs.
-     if (player.y - 70 <= this.y && player.x - 70 <= this.x
-     && player.y + 70 >= this.y && player.x + 70 >= this.x) {
+     if (player.y - 40 <= this.y && player.x - 65 <= this.x
+     && player.y + 40 >= this.y && player.x + 65 >= this.x) {
         console.log('collided');
         player.resetPos();
         playerGameInfo.deductLife();
@@ -43,6 +43,12 @@ Enemy.prototype.update = function(dt) {
 Enemy.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 
+};
+
+Enemy.prototype.newSpeed = function() {
+    if (this.y === 10) {
+        console.log('new speed');
+    }
 };
 
 // Now write your own player class
@@ -65,11 +71,6 @@ let Player = function(x,y, speed) {
 
 
 Player.prototype.update = function() {
-    //  if (player.y - 70 <= enemyOne.y && player.x - 70 <= enemyOne.x
-    //  && player.y + 70 >= enemyOne.y && player.x + 70 >= enemyOne.x) {
-    //     console.log('collided');
-    //     this.resetPos();
-    // }
   
 };
 
@@ -118,7 +119,6 @@ Player.prototype.handleInput = function(keyPress) {
         }, 500);
     }
 
-
     console.log('keyPress -' + keyPress);
 };
 
@@ -130,9 +130,6 @@ Player.prototype.handleInput = function(keyPress) {
 *
 */
 
-var randomObject = {
-    random: 'random',
-};
 
 const playerGameInfo = {
     lives: 3,
@@ -154,20 +151,19 @@ const playerGameInfo = {
     loseGame: function() {
         if (this.lives < 1) {
             console.log('you lost!');
+
         }
     }
 
 }
 
-/*
-**********************************************************
-*/
+const randomizerEnemy = function(min, max) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
 
-// let playerLevel = $('#currentLevel');
-// // playerLevel.text("Level: " + player.level);
-// let currentLives = $('#currentLives');
 
-// console.log("Lives " + currentLives.text());
 /*
 *********************************************************
 */
@@ -177,9 +173,10 @@ const playerGameInfo = {
 // Place all enemy objects in an array called allEnemies
 // Place the player object in a variable called player
 //enemy must start at 0 for the x, 
-let enemyOne = new Enemy(0, 235, Math.random() * 256);
-let enemyTwo = new Enemy(0, 140, Math.random() * 256);
-let enemyThree = new Enemy(0, 65, Math.random() * 256);
+// let randomEnemySpeed = Math.random() * (245 - 100 + 1) + 100;
+let enemyOne = new Enemy(0, 235, 245) ;
+let enemyTwo = new Enemy(0, 140, 245);
+let enemyThree = new Enemy(0, 60, 245);
 
 let allEnemies = [enemyOne, enemyTwo, enemyThree];
 let player = new Player(200, 380, 70);
