@@ -34,12 +34,15 @@ Enemy.prototype.update = function(dt) {
      && player.y + 70 >= this.y && player.x + 70 >= this.x) {
         console.log('collided');
         player.resetPos();
+        playerGameInfo.deductLife();
+        playerGameInfo.loseGame();
     }
 };
 
 // Draw the enemy on the screen, required method for game
 Enemy.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+
 };
 
 // Now write your own player class
@@ -110,14 +113,49 @@ Player.prototype.handleInput = function(keyPress) {
     //if player reaches the water, resets to the beginning position
     if (player.y === -20) {
         setTimeout(function() {
-            player.resetPos()}, 500);
+            player.resetPos()
+            playerGameInfo.addPoints()
+        }, 500);
     }
 
 
     console.log('keyPress -' + keyPress);
 };
 
+/*
+*
+*
+*************Game Info***************
+*
+*
+*/
+
+var randomObject = {
+    random: 'random',
+};
+
 const playerGameInfo = {
+    lives: 3,
+    points: 0,
+    deductLife: function() {
+        this.lives -= 1;
+        let playerLives = $('#currentLives');
+        playerLives.text("Lives: " + this.lives);
+        console.log('life taken away', this.lives);
+
+    },
+    addPoints: function() {
+        this.points += 10;
+        console.log(this.points);
+        let playerPoints = $('#currentPoints');
+        playerPoints.text("Points: " + this.points);
+        console.log('you earned 10 points!');
+    },
+    loseGame: function() {
+        if (this.lives < 1) {
+            console.log('you lost!');
+        }
+    }
 
 }
 
