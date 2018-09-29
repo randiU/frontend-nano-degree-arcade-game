@@ -11,5 +11,5 @@ body {
 	flex-wrap: wrap;
 }
 .playerInfo, .lives, .level, .points {
-	width: 25%;
+	width: 33.33%;
 }
