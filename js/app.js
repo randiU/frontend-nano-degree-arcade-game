@@ -109,6 +109,7 @@ Player.prototype.handleInput = function(keyPress) {
             player.resetPos()
             playerGameInfo.addPoints()
             playerGameInfo.updateLevel();
+            playerGameInfo.loseGame();
         }, 200);
     }
 
@@ -129,18 +130,25 @@ const playerGameInfo = {
     lives: 3,
     points: 0,
     level: 1,
+    refresLives: function() {
+        $('#currentLives').text("Lives: " + this.lives);
+    },
+    refreshPoints: function() {
+        $('#currentPoints').text("Points: " + this.points);
+    },
+    refreshLevel: function() {
+        $('#currentLevel').text("Level: " + this.level);
+    },
     deductLife: function() {
         this.lives -= 1;
-        let playerLives = $('#currentLives');
-        playerLives.text("Lives: " + this.lives);
+        this.refresLives();
         console.log('life taken away', this.lives);
 
     },
     addPoints: function() {
         this.points += pointIncrement;
         console.log(this.points);
-        let playerPoints = $('#currentPoints');
-        playerPoints.text("Points: " + this.points);
+        this.refreshPoints();
         console.log('you earned 10 points!');
     },
 
@@ -151,21 +159,38 @@ const playerGameInfo = {
         //Increments speed by 100 each time player reaches water
         lowerBound += boundIncrement;
         upperBound += boundIncrement;
-        //Gets new array of random numbers to assign to enemies
+
+        this.resetEnemySpeed();
+        
+        //increments level and updates html text
+        this.level += 1;
+        this.refreshLevel();
+    },
+
+    resetEnemySpeed: function() {
         let levelSpeeds = getEnemySpeeds(lowerBound, upperBound);
         //Assigns new speeds to enemies
         enemyOne.speed  = levelSpeeds[0];
         enemyTwo.speed = levelSpeeds[1];
         enemyThree.speed = levelSpeeds[2];
-        //increments level and updates html text
-        this.level += 1;
-        $('#currentLevel').text("Level: " + this.level);
     },
     loseGame: function() {
         if (this.lives < 1) {
-            console.log('you lost!');
-
+            alert("You lost!");
+            this.resetGame();
         };
+    },
+    resetGame: function() {
+        lowerBound = 20;
+        upperBound = 150;
+        this.resetEnemySpeed();
+        this.lives = 3;
+        this.level = 1;
+        this.points = 0;
+        this.refreshLevel();
+        this.refreshPoints();
+        this.refresLives();
+        console.log('heeey');
     }
 
 }
