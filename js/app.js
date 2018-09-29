@@ -128,6 +128,7 @@ Player.prototype.handleInput = function(keyPress) {
 const playerGameInfo = {
     lives: 3,
     points: 0,
+    level: 1,
     deductLife: function() {
         this.lives -= 1;
         let playerLives = $('#currentLives');
@@ -156,6 +157,9 @@ const playerGameInfo = {
         enemyOne.speed  = levelSpeeds[0];
         enemyTwo.speed = levelSpeeds[1];
         enemyThree.speed = levelSpeeds[2];
+        //increments level and updates html text
+        this.level += 1;
+        $('#currentLevel').text("Level: " + this.level);
     },
     loseGame: function() {
         if (this.lives < 1) {
