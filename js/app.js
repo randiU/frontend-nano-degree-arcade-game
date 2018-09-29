@@ -6,12 +6,10 @@
 
 // Enemies our player must avoid
 var Enemy = function(x,y,speed) {
-    // Variables applied to each of our instances go here,
-    // we've provided one for you to get started
+    // Variables applied to each instance 
     this.x = x;
     this.y = y;
-    //randomized the speed of each enemy
-    this.speed = Math.random() * (speed - 40 + 1) + 40;
+    this.speed = speed;
     // The image/sprite for our enemies, this uses
     // a helper we've provided to easily load images
     this.sprite = 'images/enemy-bug.png';
@@ -45,11 +43,6 @@ Enemy.prototype.render = function() {
 
 };
 
-Enemy.prototype.newSpeed = function() {
-    if (this.y === 10) {
-        console.log('new speed');
-    }
-};
 
 // Now write your own player class
 // This class requires an update(), render() and
@@ -76,7 +69,6 @@ Player.prototype.update = function() {
 
 //adjusts players position back to the beginning
 Player.prototype.resetPos = function() {
-        console.log('next level');
         this.x = 200;
         this.y = 380;
 };
@@ -116,11 +108,13 @@ Player.prototype.handleInput = function(keyPress) {
         setTimeout(function() {
             player.resetPos()
             playerGameInfo.addPoints()
-        }, 500);
+            playerGameInfo.updateLevel();
+        }, 200);
     }
 
     console.log('keyPress -' + keyPress);
 };
+
 
 /*
 *
@@ -130,7 +124,7 @@ Player.prototype.handleInput = function(keyPress) {
 *
 */
 
-
+//updates the lives, points, and level 
 const playerGameInfo = {
     lives: 3,
     points: 0,
@@ -142,26 +136,50 @@ const playerGameInfo = {
 
     },
     addPoints: function() {
-        this.points += 10;
+        this.points += pointIncrement;
         console.log(this.points);
         let playerPoints = $('#currentPoints');
         playerPoints.text("Points: " + this.points);
         console.log('you earned 10 points!');
     },
+
+    //Each time a player earns 10 points/enters water they move on to next level.
+    updateLevel: function() {
+        //Updates enemy speed. 
+        let level = this.points / pointIncrement;
+        //Increments speed by 100 each time player reaches water
+        lowerBound += boundIncrement;
+        upperBound += boundIncrement;
+        //Gets new array of random numbers to assign to enemies
+        let levelSpeeds = getEnemySpeeds(lowerBound, upperBound);
+        //Assigns new speeds to enemies
+        enemyOne.speed  = levelSpeeds[0];
+        enemyTwo.speed = levelSpeeds[1];
+        enemyThree.speed = levelSpeeds[2];
+    },
     loseGame: function() {
         if (this.lives < 1) {
             console.log('you lost!');
 
-        }
+        };
     }
 
 }
 
-const randomizerEnemy = function(min, max) {
-    min = Math.ceil(min);
-    max = Math.floor(max);
-    return Math.floor(Math.random() * (max - min + 1)) + min;
-}
+//Starting boundaries for enemy speeds.
+let lowerBound = 20;
+let upperBound = 150;
+
+//Returns 3 random numbers within designated range
+const getEnemySpeeds = function(lowerBound, upperBound) {
+    return [boundRandom(lowerBound,upperBound), boundRandom(lowerBound,upperBound), boundRandom(lowerBound,upperBound)];
+
+};
+
+//Creates random number with designated range based off of lowerBound and UpperBound.
+const boundRandom = function(lowerBound, upperBound) {
+    return Math.random() * (upperBound - lowerBound + 1) + lowerBound;
+};
 
 
 /*
@@ -173,20 +191,20 @@ const randomizerEnemy = function(min, max) {
 // Place all enemy objects in an array called allEnemies
 // Place the player object in a variable called player
 //enemy must start at 0 for the x, 
-// let randomEnemySpeed = Math.random() * (245 - 100 + 1) + 100;
-let enemyOne = new Enemy(0, 235, 245) ;
-let enemyTwo = new Enemy(0, 140, 245);
-let enemyThree = new Enemy(0, 60, 245);
+
+let pointIncrement = 10;
+let boundIncrement = 100;
+let levelSpeedInit = getEnemySpeeds(lowerBound, upperBound);
+
+let enemyOne = new Enemy(0, 235, levelSpeedInit[0]);
+let enemyTwo = new Enemy(0, 140, levelSpeedInit[1]);
+let enemyThree = new Enemy(0, 60, levelSpeedInit[2]);
 
 let allEnemies = [enemyOne, enemyTwo, enemyThree];
 let player = new Player(200, 380, 70);
-let score = 0;
-let gameLevel = 1;
 let enemy = ""
 
 
-// let currentLevel = player.level;
-// playerLevel.text("Level: " + currentLevel.bind(player));
 
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.
