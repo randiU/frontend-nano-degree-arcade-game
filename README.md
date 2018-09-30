@@ -9,4 +9,4 @@ The objective is to get the player to the water without colliding into a bug. Th
 1. Download or clone the [repo](https://github.com/randiU/frontend-nano-degree-arcade-game.git).
 2. Open `index.html` file in your browser.
 
-![Game Example](img/bugCrossingExample.jpg)
+![Game Example](img/bugCrossingExample.png)
