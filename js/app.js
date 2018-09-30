@@ -44,24 +44,18 @@ Enemy.prototype.render = function() {
 };
 
 
-// Now write your own player class
-// This class requires an update(), render() and
-// a handleInput() method.
-
 /*
 *
 *********************Player**************************
 *
 */
-//take out level,points,lives and make them into own object instead of constructor f
+
 let Player = function(x,y, speed) {
     this.x = x;
     this.y = y;
     this.speed = speed;
     this.sprite = 'images/char-boy.png'
 };
-
-
 
 Player.prototype.update = function() {
   
@@ -85,25 +79,22 @@ Player.prototype.handleInput = function(keyPress) {
     //&& this.x(or y) adds border functionality
     if (keyPress == 'left' && this.x > 0) {
         player.x -= player.speed;
-        console.log(player.x, player.y);
-        console.log(enemyOne.x, enemyOne.y);
     }
+
     if (keyPress == 'up' && this.y > -20) {
         player.y -= player.speed - 20;
-        console.log(player.x, player.y);
-        console.log(enemyOne.x, enemyOne.y);
     }
+
     if (keyPress == 'right' && this.x < 410) {
         player.x += player.speed;
-        console.log(player.x, player.y);
-        console.log(enemyOne.x, enemyOne.y);
     }
+
     if (keyPress == 'down' && this.y < 380) {
         player.y += player.speed - 20;
-        console.log(player.x, player.y);
-        console.log(enemyOne.x, enemyOne.y);
     }
-    //if player reaches the water, resets to the beginning position
+    //if player reaches the water, resets to the beginning position,
+    //adds points, updates, level, and runs the loseGame function if
+    //player runs out of lives
     if (player.y === -20) {
         setTimeout(function() {
             player.resetPos()
@@ -120,7 +111,7 @@ Player.prototype.handleInput = function(keyPress) {
 /*
 *
 *
-*************Game Info***************
+*************Game Info/ Updates***************
 *
 *
 */
@@ -130,6 +121,12 @@ const playerGameInfo = {
     lives: 3,
     points: 0,
     level: 1,
+    pointIncrement: 10,
+    boundIncrement: 100,
+    //starting lower boundary for enemy speed
+    lowerBound: 20,
+    //starting upper boundary for enemy speed
+    upperBound: 150,
     refresLives: function() {
         $('#currentLives').text("Lives: " + this.lives);
     },
@@ -141,13 +138,15 @@ const playerGameInfo = {
     },
     deductLife: function() {
         this.lives -= 1;
+        //resets lives based on new increment
         this.refresLives();
         console.log('life taken away', this.lives);
 
     },
     addPoints: function() {
-        this.points += pointIncrement;
+        this.points += this.pointIncrement;
         console.log(this.points);
+        //resets points based on new increment
         this.refreshPoints();
         console.log('you earned 10 points!');
     },
@@ -155,11 +154,11 @@ const playerGameInfo = {
     //Each time a player earns 10 points/enters water they move on to next level.
     updateLevel: function() {
         //Updates enemy speed. 
-        let level = this.points / pointIncrement;
+        let level = this.points / this.pointIncrement;
         //Increments speed by 100 each time player reaches water
-        lowerBound += boundIncrement;
-        upperBound += boundIncrement;
-
+        this.lowerBound += this.boundIncrement;
+        this.upperBound += this.boundIncrement;
+        //resets speed based on new bound settings
         this.resetEnemySpeed();
         
         //increments level and updates html text
@@ -167,19 +166,35 @@ const playerGameInfo = {
         this.refreshLevel();
     },
 
+    //Creates random number within designated range based off of lowerBound and upperBound.
+    boundRandom: function() {
+        return Math.random() * (this.upperBound - this.lowerBound + 1) + this.lowerBound;
+    },
+
+    //Returns 3 random numbers within designated range in an array
+    getEnemySpeeds: function() {
+        return [this.boundRandom(this.lowerBound,this.upperBound), 
+        this.boundRandom(this.lowerBound,this.upperBound), 
+        this.boundRandom(this.lowerBound,this.upperBound)];
+    },
+
     resetEnemySpeed: function() {
-        let levelSpeeds = getEnemySpeeds(lowerBound, upperBound);
+        //will return an array with 3 randomized speeds based on
+        //player's current level
+        let levelSpeeds = this.getEnemySpeeds();
         //Assigns new speeds to enemies
         enemyOne.speed  = levelSpeeds[0];
         enemyTwo.speed = levelSpeeds[1];
         enemyThree.speed = levelSpeeds[2];
     },
+
     loseGame: function() {
         if (this.lives < 1) {
             alert("You lost!");
             this.resetGame();
         };
     },
+
     resetGame: function() {
         lowerBound = 20;
         upperBound = 150;
@@ -193,23 +208,7 @@ const playerGameInfo = {
         console.log('heeey');
     }
 
-}
-
-//Starting boundaries for enemy speeds.
-let lowerBound = 20;
-let upperBound = 150;
-
-//Returns 3 random numbers within designated range
-const getEnemySpeeds = function(lowerBound, upperBound) {
-    return [boundRandom(lowerBound,upperBound), boundRandom(lowerBound,upperBound), boundRandom(lowerBound,upperBound)];
-
 };
-
-//Creates random number with designated range based off of lowerBound and UpperBound.
-const boundRandom = function(lowerBound, upperBound) {
-    return Math.random() * (upperBound - lowerBound + 1) + lowerBound;
-};
-
 
 /*
 *********************************************************
@@ -221,9 +220,7 @@ const boundRandom = function(lowerBound, upperBound) {
 // Place the player object in a variable called player
 //enemy must start at 0 for the x, 
 
-let pointIncrement = 10;
-let boundIncrement = 100;
-let levelSpeedInit = getEnemySpeeds(lowerBound, upperBound);
+let levelSpeedInit = playerGameInfo.getEnemySpeeds();
 
 let enemyOne = new Enemy(0, 235, levelSpeedInit[0]);
 let enemyTwo = new Enemy(0, 140, levelSpeedInit[1]);
