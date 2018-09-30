@@ -10,3 +10,19 @@ The objective is to get the player to the water without colliding into a bug. Th
 2. Open `index.html` file in your browser.
 
 ![Game Example](images/bugCrossingExample.png)
+
+## Resources used to create the game
+
+* [Udacity GitHub](https://github.com/udacity/frontend-nanodegree-arcade-game.git)
+
+*https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random
+
+*https://github.com/lacyjpr/arcade
+
+*https://github.com/brenopolanski/udacity-classic-arcade-game-clone/blob/master/js/app.js
+
+*https://javascript.info/settimeout-setinterval
+
+*http://api.jquery.com/text/
+
+
