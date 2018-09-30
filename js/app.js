@@ -196,8 +196,8 @@ const playerGameInfo = {
     },
 
     resetGame: function() {
-        lowerBound = 20;
-        upperBound = 150;
+        this.lowerBound = 20;
+        this.upperBound = 150;
         this.resetEnemySpeed();
         this.lives = 3;
         this.level = 1;
