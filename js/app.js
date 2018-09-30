@@ -101,7 +101,7 @@ Player.prototype.handleInput = function(keyPress) {
             playerGameInfo.addPoints()
             playerGameInfo.updateLevel();
             playerGameInfo.loseGame();
-        }, 200);
+        }, 50);
     }
 
     console.log('keyPress -' + keyPress);
