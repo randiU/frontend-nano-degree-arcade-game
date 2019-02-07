@@ -9,7 +9,7 @@ The objective is to get the player to the water without colliding into the bread
 1. Download or clone the [repo](https://github.com/randiU/frontend-nano-degree-arcade-game.git).
 2. Open `index.html` file in your browser.
 
-![Game Example](images/gameExample.jpg)
+![Game Example](images/gameExample.png)
 
 ## Resources used to create the game
 
