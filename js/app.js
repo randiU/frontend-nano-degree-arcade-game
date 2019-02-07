@@ -190,7 +190,7 @@ const playerGameInfo = {
 
     loseGame: function() {
         if (this.lives < 1) {
-            alert("You lost!");
+            alert("INDIGESTION!!!!!!");
             this.resetGame();
         };
     },
